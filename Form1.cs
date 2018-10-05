@@ -12,6 +12,8 @@ namespace WeirdDocumentEditor
 {
     public partial class Form1 : Form
     {
+        Document _document = new Document();
+
         public Form1()
         {
             InitializeComponent();
