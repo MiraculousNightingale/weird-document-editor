@@ -21,6 +21,11 @@ namespace WeirdDocumentEditor
             Sections = new List<Section>();
         }
 
+        public void AddSection()
+        {
+            Sections.Add(new Section());
+        }
+
 
     }
 }
