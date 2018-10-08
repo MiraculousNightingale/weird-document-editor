@@ -13,10 +13,12 @@ namespace WeirdDocumentEditor
          * Static constants for convenience
          */
         public static string PANEL { get => "Panel"; }
+        public static string BUTTON { get => "Button"; }
         public static string RICHTEXTBOX { get => "RichTextBox"; }
         public static string TEXTBOX { get => "TextBox"; }
         public static string LABEL { get => "Label"; }
         public static int PANEL_L { get => PANEL.Length; }
+        public static int BUTTON_L { get => BUTTON.Length; }
         public static int RICHTEXTBOX_L { get => RICHTEXTBOX.Length; }
         public static int TEXTBOX_L { get => TEXTBOX.Length; }
         public static int LABEL_L { get => LABEL.Length; }
@@ -27,6 +29,11 @@ namespace WeirdDocumentEditor
         public static string GetPanelName(string baseName, int id)
         {
             return baseName + id.ToString() + PANEL;
+        }
+
+        public static string GetButtonName(string baseName, int id)
+        {
+            return baseName + id.ToString() + BUTTON;
         }
 
         public static string GetRichTextBoxName(string baseName, int id)

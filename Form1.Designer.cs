@@ -123,26 +123,29 @@
             // 
             // docPanel
             // 
+            this.docPanel.AutoSize = true;
+            this.docPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.docPanel.Controls.Add(this.sectionPanel);
-            this.docPanel.Location = new System.Drawing.Point(12, 129);
+            this.docPanel.Location = new System.Drawing.Point(0, 129);
             this.docPanel.Name = "docPanel";
-            this.docPanel.Size = new System.Drawing.Size(578, 587);
+            this.docPanel.Size = new System.Drawing.Size(602, 215);
             this.docPanel.TabIndex = 2;
             // 
             // sectionPanel
             // 
+            this.sectionPanel.AutoScroll = true;
             this.sectionPanel.Controls.Add(this.removeSectionButton);
             this.sectionPanel.Controls.Add(this.paragraphPanel);
             this.sectionPanel.Controls.Add(this.sectionTitleLabel);
             this.sectionPanel.Controls.Add(this.sectionTitleTextBox);
             this.sectionPanel.Location = new System.Drawing.Point(3, 3);
             this.sectionPanel.Name = "sectionPanel";
-            this.sectionPanel.Size = new System.Drawing.Size(572, 230);
+            this.sectionPanel.Size = new System.Drawing.Size(596, 209);
             this.sectionPanel.TabIndex = 0;
             // 
             // removeSectionButton
             // 
-            this.removeSectionButton.Location = new System.Drawing.Point(445, 205);
+            this.removeSectionButton.Location = new System.Drawing.Point(445, 10);
             this.removeSectionButton.Name = "removeSectionButton";
             this.removeSectionButton.Size = new System.Drawing.Size(121, 23);
             this.removeSectionButton.TabIndex = 2;
@@ -158,7 +161,7 @@
             this.paragraphPanel.Controls.Add(this.paragraphTitleTextBox);
             this.paragraphPanel.Location = new System.Drawing.Point(3, 39);
             this.paragraphPanel.Name = "paragraphPanel";
-            this.paragraphPanel.Size = new System.Drawing.Size(566, 163);
+            this.paragraphPanel.Size = new System.Drawing.Size(590, 163);
             this.paragraphPanel.TabIndex = 1;
             // 
             // removeParagraphButton
@@ -252,13 +255,15 @@
             // addSectionToolStripMenuItem
             // 
             this.addSectionToolStripMenuItem.Name = "addSectionToolStripMenuItem";
-            this.addSectionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addSectionToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.addSectionToolStripMenuItem.Text = "Add Section";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(602, 727);
             this.Controls.Add(this.docPanel);
             this.Controls.Add(this.docTypeLabel);

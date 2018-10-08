@@ -8,7 +8,7 @@ namespace WeirdDocumentEditor
 {
     class Section
     {
-        public static string SECTION { get => "section"; }
+        public static string SECTION { get => "Section"; }
         public static int SECTION_L { get => SECTION.Length; }
 
         public string Title { get; set; }

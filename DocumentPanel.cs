@@ -10,8 +10,16 @@ namespace WeirdDocumentEditor
 {
     class DocumentPanel : Panel
     {
+        public static string AddParagraphButton { get => "add" + Paragraph.PARAGRAPH + ControlUtility.BUTTON; }
+        public static string RemoveParagraphButton { get => "remove" + Paragraph.PARAGRAPH + ControlUtility.BUTTON; }
+        public static string RemoveSectionButton { get => "remove" + Section.SECTION + ControlUtility.BUTTON; }
         public string BaseName { get => Name.Contains(ControlUtility.PANEL) ? Name.Replace(ControlUtility.PANEL, string.Empty) : Name; }
-
+        private int id;
+        public int Id
+        {
+            get { return id; }
+            set { id = value; SetId(id); }
+        }
         /*
          * Panel Deep copy constructor
          */
@@ -19,6 +27,11 @@ namespace WeirdDocumentEditor
         {
             Name = copyFrom.Name;
             Size = new Size(copyFrom.Size.Width, copyFrom.Size.Height);
+            // By default DocumentPanels should be only scrolled downwards
+            HorizontalScroll.Maximum = 0;
+            AutoScroll = copyFrom.AutoScroll;
+            AutoSize = copyFrom.AutoSize;
+            AutoSizeMode = copyFrom.AutoSizeMode;
             Location = new Point(copyFrom.Location.X, copyFrom.Location.Y);
             foreach (Control control in copyFrom.Controls)
             {
@@ -46,12 +59,12 @@ namespace WeirdDocumentEditor
         }
 
         // Sets the id in controls Name attribute
-        public void SetId(int id)
+        private void SetId(int id)
         {
             Name = ControlUtility.GetIdentifiedName(this as Panel, id);
             foreach (Control control in Controls)
                 if (control is Panel) (control as DocumentPanel).SetId(id);
-                else control.Name = ControlUtility.GetIdentifiedName(control, id);
+                else if (!(control is Button)) control.Name = ControlUtility.GetIdentifiedName(control, id);
         }
 
         /*
