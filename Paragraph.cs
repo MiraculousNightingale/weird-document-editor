@@ -9,6 +9,7 @@ namespace WeirdDocumentEditor
     class Paragraph
     {
         public static string PARAGRAPH { get => "Paragraph"; }
+        public static string paragraph { get => PARAGRAPH.ToLower(); }
         public static int PARAGRAPH_L { get => PARAGRAPH.Length; }
 
         public string Title { get; set; }
@@ -18,6 +19,9 @@ namespace WeirdDocumentEditor
         {
             Title = string.Empty;
             Text = string.Empty;
+            //Debug
+            //Title = "NewParagraph";
+            //Text = "NewParagraph";
         }
     }
 }

@@ -8,6 +8,7 @@ namespace WeirdDocumentEditor
 {
     class Document
     {
+
         public string Title { get; set; }
         public string Author { get; set; }
         public string Type { get; set; }
@@ -21,6 +22,9 @@ namespace WeirdDocumentEditor
             Sections = new List<Section>();
         }
 
+        /// <summary>
+        /// Add new Section in current Document
+        /// </summary>
         public void AddSection()
         {
             Sections.Add(new Section());

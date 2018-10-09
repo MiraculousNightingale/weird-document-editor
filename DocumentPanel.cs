@@ -10,6 +10,10 @@ namespace WeirdDocumentEditor
 {
     class DocumentPanel : Panel
     {
+        //Binding names constants
+        private const string section = "section";
+        private const string paragraph = "paragraph";
+
         public static string DOCUMENTPANEL { get => "DocumentPanel"; }
         public static int DOCUMENTPANEL_L { get => DOCUMENTPANEL.Length; }
         public static string AddParagraphButton { get => "add" + Paragraph.PARAGRAPH + ControlUtility.BUTTON; }
@@ -17,7 +21,6 @@ namespace WeirdDocumentEditor
         public static string RemoveSectionButton { get => "remove" + Section.SECTION + ControlUtility.BUTTON; }
         public string BaseName { get => ControlUtility.GetBaseName(this); }
         //public string BaseName { get => Name.Contains(DOCUMENTPANEL) ? Name.Replace(DOCUMENTPANEL, string.Empty) : Name; }
-
         private int id;
         public int Id
         {
@@ -38,6 +41,10 @@ namespace WeirdDocumentEditor
         /*
          * Panel Deep copy constructor
          */
+         /// <summary>
+         /// Deep copy constructor from Panel object.
+         /// </summary>
+         /// <param name="copyFrom"></param>
         public DocumentPanel(Panel copyFrom)
         {
             Name = copyFrom.Name;
@@ -73,7 +80,11 @@ namespace WeirdDocumentEditor
             }
         }
 
-        // Sets the id in controls Name attribute
+        /// <summary>
+        /// Sets the id this object to given value.
+        /// <para>Changes names of this and child control objects to identified names with given id.</para>
+        /// </summary>
+        /// <param name="id"></param>
         private void SetId(int id)
         {
             Name = ControlUtility.GetIdentifiedName(this as Panel, id);
@@ -102,10 +113,36 @@ namespace WeirdDocumentEditor
             Location = new Point(Location.X, Location.Y + shift);
         }
 
-        // Assign Data Bindings to each control
-        public void AssignDataBindings()
+        /// <summary>
+        /// Explicit data binding method for Document class
+        /// <para>Binds each control of this and child DocumentPanel objects recursively
+        /// according to object basenames(section/paragraph) and child control types.</para>
+        /// </summary>
+        /// <param name="_object"></param>
+        public void AssignDataBindings(Document _object)
         {
-            return;
+            foreach (Control control in Controls)
+            {
+                //Recursion
+                if (control is DocumentPanel) (control as DocumentPanel).AssignDataBindings(_object);
+                else
+                    switch (BaseName)
+                    {
+                        case section:
+                            // Id in current context is Id of the active section
+                            if (control is Label || control is TextBox) control.DataBindings.Add(nameof(TextBox.Text), _object.Sections[Id], nameof(Section.Title));
+                            break;
+                        case paragraph:
+                            DocumentPanel activeParagraph = this;
+                            DocumentPanel activeSection = activeParagraph.Parent as DocumentPanel;
+                            if (control is Label || control is TextBox) control.DataBindings.Add(nameof(TextBox.Text), _object.Sections[activeSection.Id].Paragraphs[activeParagraph.Id], nameof(Paragraph.Title));
+                            if (control is RichTextBox) control.DataBindings.Add(nameof(RichTextBox.Text), _object.Sections[activeSection.Id].Paragraphs[activeParagraph.Id], nameof(Paragraph.Text));
+
+                            break;
+                        default:
+                            break;
+                    }
+            }
         }
 
 

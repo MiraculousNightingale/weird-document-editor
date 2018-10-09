@@ -123,12 +123,12 @@
             // 
             // docPanel
             // 
-            this.docPanel.AutoSize = true;
+            this.docPanel.AutoScroll = true;
             this.docPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.docPanel.Controls.Add(this.sectionDocumentPanel);
             this.docPanel.Location = new System.Drawing.Point(0, 129);
             this.docPanel.Name = "docPanel";
-            this.docPanel.Size = new System.Drawing.Size(602, 215);
+            this.docPanel.Size = new System.Drawing.Size(602, 586);
             this.docPanel.TabIndex = 2;
             // 
             // sectionDocumentPanel
@@ -140,12 +140,12 @@
             this.sectionDocumentPanel.Controls.Add(this.sectionTitleTextBox);
             this.sectionDocumentPanel.Location = new System.Drawing.Point(3, 3);
             this.sectionDocumentPanel.Name = "sectionDocumentPanel";
-            this.sectionDocumentPanel.Size = new System.Drawing.Size(596, 209);
+            this.sectionDocumentPanel.Size = new System.Drawing.Size(569, 209);
             this.sectionDocumentPanel.TabIndex = 0;
             // 
             // removeSectionButton
             // 
-            this.removeSectionButton.Location = new System.Drawing.Point(445, 10);
+            this.removeSectionButton.Location = new System.Drawing.Point(422, 10);
             this.removeSectionButton.Name = "removeSectionButton";
             this.removeSectionButton.Size = new System.Drawing.Size(121, 23);
             this.removeSectionButton.TabIndex = 2;
@@ -161,12 +161,12 @@
             this.paragraphDocumentPanel.Controls.Add(this.paragraphTitleTextBox);
             this.paragraphDocumentPanel.Location = new System.Drawing.Point(3, 39);
             this.paragraphDocumentPanel.Name = "paragraphDocumentPanel";
-            this.paragraphDocumentPanel.Size = new System.Drawing.Size(590, 163);
+            this.paragraphDocumentPanel.Size = new System.Drawing.Size(540, 163);
             this.paragraphDocumentPanel.TabIndex = 1;
             // 
             // removeParagraphButton
             // 
-            this.removeParagraphButton.Location = new System.Drawing.Point(507, 6);
+            this.removeParagraphButton.Location = new System.Drawing.Point(476, 6);
             this.removeParagraphButton.Name = "removeParagraphButton";
             this.removeParagraphButton.Size = new System.Drawing.Size(25, 23);
             this.removeParagraphButton.TabIndex = 2;
@@ -175,7 +175,7 @@
             // 
             // addParagraphButton
             // 
-            this.addParagraphButton.Location = new System.Drawing.Point(538, 6);
+            this.addParagraphButton.Location = new System.Drawing.Point(507, 6);
             this.addParagraphButton.Name = "addParagraphButton";
             this.addParagraphButton.Size = new System.Drawing.Size(25, 23);
             this.addParagraphButton.TabIndex = 2;
@@ -186,7 +186,7 @@
             // 
             this.paragraphRichTextBox.Location = new System.Drawing.Point(3, 32);
             this.paragraphRichTextBox.Name = "paragraphRichTextBox";
-            this.paragraphRichTextBox.Size = new System.Drawing.Size(560, 128);
+            this.paragraphRichTextBox.Size = new System.Drawing.Size(529, 128);
             this.paragraphRichTextBox.TabIndex = 1;
             this.paragraphRichTextBox.Text = "";
             // 
