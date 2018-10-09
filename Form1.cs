@@ -31,16 +31,27 @@ namespace WeirdDocumentEditor
         public Form1()
         {
             InitializeComponent();
-
+            //Hide template
             sectionDocumentPanel.Visible = false;
+            //Menu events
             addSectionToolStripMenuItem.Click += AddSection;
+            //Initializers
             InitializeInputEvents(this);
+            InitializeDocAttributeBindings(this, _document);
 
         }
 
         /*
          * Initializers 
          */
+        private void InitializeDocAttributeBindings(Control entryControl, Document _object)
+        {
+            foreach (Control control in entryControl.Controls)
+                if (control is Label || control is TextBox)
+                    if (control.Name.Contains(nameof(Document.Title))) control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Title));
+                    else if (control.Name.Contains(nameof(Document.Author))) control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Author));
+                    else if (control.Name.Contains(nameof(Document.Type))) control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Type));
+        }
         /// <summary>
         /// Initializes input events for a control.
         /// <para>Parameter can be any control: Panel, DocumentPanel, Form, Label, TextBox</para>
@@ -55,7 +66,13 @@ namespace WeirdDocumentEditor
             else
             {
                 if (controlEntry is Label)
-                    controlEntry.Click += SwitchToTextBox;
+                {
+                    if (!controlEntry.Name.Contains(DocumentPanel.STATIC_LABEL))
+                    {
+                        controlEntry.Click += SwitchToTextBox;
+                        controlEntry.VisibleChanged += EmptyLabelSwitch;
+                    }
+                }
                 else if (controlEntry is TextBox)
                 {
                     controlEntry.Validated += SwitchToLabel;
@@ -140,10 +157,31 @@ namespace WeirdDocumentEditor
         private void SwitchToLabel(object sender, EventArgs e)
         {
             TextBox eventCaller = sender as TextBox;
-            eventCaller.Visible = false;
-            string baseName = ControlUtility.GetSimpleBaseName(eventCaller);
-            Control parentContainer = eventCaller.Parent;
-            parentContainer.Controls[ControlUtility.GetLabelName(baseName)].Visible = true;
+            if (!string.IsNullOrWhiteSpace(eventCaller.Text))
+            {
+                eventCaller.Visible = false;
+                string baseName = ControlUtility.GetSimpleBaseName(eventCaller);
+                Control parentContainer = eventCaller.Parent;
+                parentContainer.Controls[ControlUtility.GetLabelName(baseName)].Visible = true;
+            }
+        }
+
+        /// <summary>
+        /// If a Label is empty - show TextBox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EmptyLabelSwitch(object sender, EventArgs e)
+        {
+            Label eventCaller = sender as Label;
+            if (string.IsNullOrWhiteSpace(eventCaller.Text))
+            {
+                eventCaller.Visible = false;
+                string baseName = ControlUtility.GetSimpleBaseName(eventCaller);
+                Control parentContainer = eventCaller.Parent;
+                TextBox replacer = parentContainer.Controls[ControlUtility.GetTextBoxName(baseName)] as TextBox;
+                replacer.Visible = true;
+            }
         }
 
         private void AddSection(object sender, EventArgs e)
@@ -191,7 +229,7 @@ namespace WeirdDocumentEditor
 
         private void RemoveParagraph(object sender, EventArgs e)
         {
-
+            
         }
 
     }

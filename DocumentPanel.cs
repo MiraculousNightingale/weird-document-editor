@@ -14,6 +14,7 @@ namespace WeirdDocumentEditor
         private const string section = "section";
         private const string paragraph = "paragraph";
 
+        public static string STATIC_LABEL { get => "StaticLabel"; }
         public static string DOCUMENTPANEL { get => "DocumentPanel"; }
         public static int DOCUMENTPANEL_L { get => DOCUMENTPANEL.Length; }
         public static string AddParagraphButton { get => "add" + Paragraph.PARAGRAPH + ControlUtility.BUTTON; }
@@ -41,10 +42,10 @@ namespace WeirdDocumentEditor
         /*
          * Panel Deep copy constructor
          */
-         /// <summary>
-         /// Deep copy constructor from Panel object.
-         /// </summary>
-         /// <param name="copyFrom"></param>
+        /// <summary>
+        /// Deep copy constructor from Panel object.
+        /// </summary>
+        /// <param name="copyFrom"></param>
         public DocumentPanel(Panel copyFrom)
         {
             Name = copyFrom.Name;
@@ -54,6 +55,7 @@ namespace WeirdDocumentEditor
             AutoScroll = copyFrom.AutoScroll;
             AutoSize = copyFrom.AutoSize;
             AutoSizeMode = copyFrom.AutoSizeMode;
+            BorderStyle = copyFrom.BorderStyle;
             Location = new Point(copyFrom.Location.X, copyFrom.Location.Y);
             foreach (Control control in copyFrom.Controls)
             {
@@ -92,7 +94,7 @@ namespace WeirdDocumentEditor
                 // Nullified id is used instead because section paragraphs begin from 0 each time and scale on with ChildPanelCount
                 //if (control is Panel) (control as DocumentPanel).SetId(id);
                 if (control is Panel) (control as DocumentPanel).SetId(0);
-                else if (!(control is Button)) control.Name = ControlUtility.GetIdentifiedName(control, id);
+                else if (!(control is Button) && !control.Name.Contains(STATIC_LABEL)) control.Name = ControlUtility.GetIdentifiedName(control, id);
         }
 
         /*
@@ -130,14 +132,13 @@ namespace WeirdDocumentEditor
                     {
                         case section:
                             // Id in current context is Id of the active section
-                            if (control is Label || control is TextBox) control.DataBindings.Add(nameof(TextBox.Text), _object.Sections[Id], nameof(Section.Title));
+                            if ((control is Label || control is TextBox) && !control.Name.Contains(STATIC_LABEL)) control.DataBindings.Add(nameof(TextBox.Text), _object.Sections[Id], nameof(Section.Title));
                             break;
                         case paragraph:
                             DocumentPanel activeParagraph = this;
                             DocumentPanel activeSection = activeParagraph.Parent as DocumentPanel;
-                            if (control is Label || control is TextBox) control.DataBindings.Add(nameof(TextBox.Text), _object.Sections[activeSection.Id].Paragraphs[activeParagraph.Id], nameof(Paragraph.Title));
+                            if ((control is Label || control is TextBox) && !control.Name.Contains(STATIC_LABEL)) control.DataBindings.Add(nameof(TextBox.Text), _object.Sections[activeSection.Id].Paragraphs[activeParagraph.Id], nameof(Paragraph.Title));
                             if (control is RichTextBox) control.DataBindings.Add(nameof(RichTextBox.Text), _object.Sections[activeSection.Id].Paragraphs[activeParagraph.Id], nameof(Paragraph.Text));
-
                             break;
                         default:
                             break;

@@ -19,6 +19,10 @@ namespace WeirdDocumentEditor
             Title = string.Empty;
             Author = string.Empty;
             Type = string.Empty;
+            //Debug
+            //Title = "";
+            //Author = "TozheHui";
+            //Type = "Takoi zhe";
             Sections = new List<Section>();
         }
 
