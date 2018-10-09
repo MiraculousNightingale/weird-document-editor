@@ -12,20 +12,14 @@ namespace WeirdDocumentEditor
 {
     public partial class Form1 : Form
     {
-        private Size DefaultSectionSize { get => sectionPanel.Size; }
-        private Size DefaultParagraphSize { get => paragraphPanel.Size; }
+        private Size DefaultSectionSize { get => sectionDocumentPanel.Size; }
+        private Size DefaultParagraphSize { get => paragraphDocumentPanel.Size; }
         private int SectionCount { get => docPanel.Controls.Count - 1; }
-        private int ParagraphCount(Control section)
+        
+        private Point NextSectionLocation { get => new Point(sectionDocumentPanel.Location.X, sectionDocumentPanel.Location.Y + DefaultSectionSize.Height * SectionCount); }
+        private Point NextParagraphLocation(DocumentPanel section)
         {
-            int _count = 0;
-            foreach (Control control in section.Controls)
-                if (control is DocumentPanel) _count++;
-            return _count;
-        }
-        private Point NextSectionLocation { get => new Point(sectionPanel.Location.X, sectionPanel.Location.Y + DefaultSectionSize.Height * SectionCount); }
-        private Point NextParagraphLocation(Control section)
-        {
-            return new Point(paragraphPanel.Location.X, paragraphPanel.Location.Y + DefaultParagraphSize.Height * ParagraphCount(section));
+            return new Point(paragraphDocumentPanel.Location.X, paragraphDocumentPanel.Location.Y + DefaultParagraphSize.Height * section.ChildPanelCount);
         }
 
         private const int sectionMargin = 10;
@@ -37,7 +31,7 @@ namespace WeirdDocumentEditor
         {
             InitializeComponent();
 
-            sectionPanel.Visible = false;
+            sectionDocumentPanel.Visible = false;
             addSectionToolStripMenuItem.Click += AddSection;
             InitializeInputEvents(this);
 
@@ -99,7 +93,7 @@ namespace WeirdDocumentEditor
 
         private void AddSection(object sender, EventArgs e)
         {
-            DocumentPanel newSection = new DocumentPanel(sectionPanel);
+            DocumentPanel newSection = new DocumentPanel(sectionDocumentPanel);
             newSection.Id = SectionCount;
             newSection.Location = NextSectionLocation;
             InitializeInputEvents(newSection);
@@ -117,8 +111,8 @@ namespace WeirdDocumentEditor
             DocumentPanel currentParagraph = (sender as Button).Parent as DocumentPanel;
             DocumentPanel activeSection = currentParagraph.Parent as DocumentPanel;
 
-            DocumentPanel newParagraph = new DocumentPanel(paragraphPanel);
-            newParagraph.Id = ParagraphCount(activeSection);
+            DocumentPanel newParagraph = new DocumentPanel(paragraphDocumentPanel);
+            newParagraph.Id = activeSection.ChildPanelCount;
 
             Point currentScroll = activeSection.AutoScrollPosition;
             activeSection.AutoScrollPosition = new Point(0, 0);

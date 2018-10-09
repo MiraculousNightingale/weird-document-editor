@@ -10,15 +10,30 @@ namespace WeirdDocumentEditor
 {
     class DocumentPanel : Panel
     {
+        public static string DOCUMENTPANEL { get => "DocumentPanel"; }
+        public static int DOCUMENTPANEL_L { get => DOCUMENTPANEL.Length; }
         public static string AddParagraphButton { get => "add" + Paragraph.PARAGRAPH + ControlUtility.BUTTON; }
         public static string RemoveParagraphButton { get => "remove" + Paragraph.PARAGRAPH + ControlUtility.BUTTON; }
         public static string RemoveSectionButton { get => "remove" + Section.SECTION + ControlUtility.BUTTON; }
-        public string BaseName { get => Name.Contains(ControlUtility.PANEL) ? Name.Replace(ControlUtility.PANEL, string.Empty) : Name; }
+        public string BaseName { get => ControlUtility.GetBaseName(this); }
+        //public string BaseName { get => Name.Contains(DOCUMENTPANEL) ? Name.Replace(DOCUMENTPANEL, string.Empty) : Name; }
+
         private int id;
         public int Id
         {
             get { return id; }
             set { id = value; SetId(id); }
+        }
+
+        public int ChildPanelCount
+        {
+            get
+            {
+                int _count = 0;
+                foreach (Control control in Controls)
+                    if (control is DocumentPanel) _count++;
+                return _count;
+            }
         }
         /*
          * Panel Deep copy constructor
@@ -63,7 +78,9 @@ namespace WeirdDocumentEditor
         {
             Name = ControlUtility.GetIdentifiedName(this as Panel, id);
             foreach (Control control in Controls)
-                if (control is Panel) (control as DocumentPanel).SetId(id);
+                // Nullified id is used instead because section paragraphs begin from 0 each time and scale on with ChildPanelCount
+                //if (control is Panel) (control as DocumentPanel).SetId(id);
+                if (control is Panel) (control as DocumentPanel).SetId(0);
                 else if (!(control is Button)) control.Name = ControlUtility.GetIdentifiedName(control, id);
         }
 

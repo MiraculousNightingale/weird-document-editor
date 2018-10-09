@@ -35,9 +35,9 @@
             this.docAuthorLabel = new System.Windows.Forms.Label();
             this.docTypeLabel = new System.Windows.Forms.Label();
             this.docPanel = new System.Windows.Forms.Panel();
-            this.sectionPanel = new System.Windows.Forms.Panel();
+            this.sectionDocumentPanel = new System.Windows.Forms.Panel();
             this.removeSectionButton = new System.Windows.Forms.Button();
-            this.paragraphPanel = new System.Windows.Forms.Panel();
+            this.paragraphDocumentPanel = new System.Windows.Forms.Panel();
             this.removeParagraphButton = new System.Windows.Forms.Button();
             this.addParagraphButton = new System.Windows.Forms.Button();
             this.paragraphRichTextBox = new System.Windows.Forms.RichTextBox();
@@ -50,8 +50,8 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addSectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.docPanel.SuspendLayout();
-            this.sectionPanel.SuspendLayout();
-            this.paragraphPanel.SuspendLayout();
+            this.sectionDocumentPanel.SuspendLayout();
+            this.paragraphDocumentPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -125,23 +125,23 @@
             // 
             this.docPanel.AutoSize = true;
             this.docPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.docPanel.Controls.Add(this.sectionPanel);
+            this.docPanel.Controls.Add(this.sectionDocumentPanel);
             this.docPanel.Location = new System.Drawing.Point(0, 129);
             this.docPanel.Name = "docPanel";
             this.docPanel.Size = new System.Drawing.Size(602, 215);
             this.docPanel.TabIndex = 2;
             // 
-            // sectionPanel
+            // sectionDocumentPanel
             // 
-            this.sectionPanel.AutoScroll = true;
-            this.sectionPanel.Controls.Add(this.removeSectionButton);
-            this.sectionPanel.Controls.Add(this.paragraphPanel);
-            this.sectionPanel.Controls.Add(this.sectionTitleLabel);
-            this.sectionPanel.Controls.Add(this.sectionTitleTextBox);
-            this.sectionPanel.Location = new System.Drawing.Point(3, 3);
-            this.sectionPanel.Name = "sectionPanel";
-            this.sectionPanel.Size = new System.Drawing.Size(596, 209);
-            this.sectionPanel.TabIndex = 0;
+            this.sectionDocumentPanel.AutoScroll = true;
+            this.sectionDocumentPanel.Controls.Add(this.removeSectionButton);
+            this.sectionDocumentPanel.Controls.Add(this.paragraphDocumentPanel);
+            this.sectionDocumentPanel.Controls.Add(this.sectionTitleLabel);
+            this.sectionDocumentPanel.Controls.Add(this.sectionTitleTextBox);
+            this.sectionDocumentPanel.Location = new System.Drawing.Point(3, 3);
+            this.sectionDocumentPanel.Name = "sectionDocumentPanel";
+            this.sectionDocumentPanel.Size = new System.Drawing.Size(596, 209);
+            this.sectionDocumentPanel.TabIndex = 0;
             // 
             // removeSectionButton
             // 
@@ -152,17 +152,17 @@
             this.removeSectionButton.Text = "removeSectionButton";
             this.removeSectionButton.UseVisualStyleBackColor = true;
             // 
-            // paragraphPanel
+            // paragraphDocumentPanel
             // 
-            this.paragraphPanel.Controls.Add(this.removeParagraphButton);
-            this.paragraphPanel.Controls.Add(this.addParagraphButton);
-            this.paragraphPanel.Controls.Add(this.paragraphRichTextBox);
-            this.paragraphPanel.Controls.Add(this.paragraphTitleLabel);
-            this.paragraphPanel.Controls.Add(this.paragraphTitleTextBox);
-            this.paragraphPanel.Location = new System.Drawing.Point(3, 39);
-            this.paragraphPanel.Name = "paragraphPanel";
-            this.paragraphPanel.Size = new System.Drawing.Size(590, 163);
-            this.paragraphPanel.TabIndex = 1;
+            this.paragraphDocumentPanel.Controls.Add(this.removeParagraphButton);
+            this.paragraphDocumentPanel.Controls.Add(this.addParagraphButton);
+            this.paragraphDocumentPanel.Controls.Add(this.paragraphRichTextBox);
+            this.paragraphDocumentPanel.Controls.Add(this.paragraphTitleLabel);
+            this.paragraphDocumentPanel.Controls.Add(this.paragraphTitleTextBox);
+            this.paragraphDocumentPanel.Location = new System.Drawing.Point(3, 39);
+            this.paragraphDocumentPanel.Name = "paragraphDocumentPanel";
+            this.paragraphDocumentPanel.Size = new System.Drawing.Size(590, 163);
+            this.paragraphDocumentPanel.TabIndex = 1;
             // 
             // removeParagraphButton
             // 
@@ -278,10 +278,10 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.docPanel.ResumeLayout(false);
-            this.sectionPanel.ResumeLayout(false);
-            this.sectionPanel.PerformLayout();
-            this.paragraphPanel.ResumeLayout(false);
-            this.paragraphPanel.PerformLayout();
+            this.sectionDocumentPanel.ResumeLayout(false);
+            this.sectionDocumentPanel.PerformLayout();
+            this.paragraphDocumentPanel.ResumeLayout(false);
+            this.paragraphDocumentPanel.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -298,10 +298,10 @@
         private System.Windows.Forms.Label docAuthorLabel;
         private System.Windows.Forms.Label docTypeLabel;
         private System.Windows.Forms.Panel docPanel;
-        private System.Windows.Forms.Panel sectionPanel;
+        private System.Windows.Forms.Panel sectionDocumentPanel;
         private System.Windows.Forms.Label sectionTitleLabel;
         private System.Windows.Forms.TextBox sectionTitleTextBox;
-        private System.Windows.Forms.Panel paragraphPanel;
+        private System.Windows.Forms.Panel paragraphDocumentPanel;
         private System.Windows.Forms.Label paragraphTitleLabel;
         private System.Windows.Forms.TextBox paragraphTitleTextBox;
         private System.Windows.Forms.Button removeSectionButton;
