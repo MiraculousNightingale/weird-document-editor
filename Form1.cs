@@ -14,7 +14,7 @@ namespace WeirdDocumentEditor
     {
         private Size DefaultSectionSize { get => sectionDocumentPanel.Size; }
         private Size DefaultParagraphSize { get => paragraphDocumentPanel.Size; }
-        private int SectionCount { get => docPanel.Controls.Count - 1; }
+        private int SectionCount { get => mainDocumentPanel.Controls.Count - 1; }
 
         private Point NextSectionLocation { get => new Point(sectionDocumentPanel.Location.X, sectionDocumentPanel.Location.Y + DefaultSectionSize.Height * SectionCount); }
         private Point NextParagraphLocation(DocumentPanel section)
@@ -27,14 +27,21 @@ namespace WeirdDocumentEditor
         private const int paragraphMargin = 10;
 
         Document _document = new Document();
+        DocumentPanel mainPanel;
 
         public Form1()
         {
             InitializeComponent();
-            //Hide template
+            //Hide templates
+            paragraphDocumentPanel.Visible = false;
             sectionDocumentPanel.Visible = false;
+            mainDocumentPanel.Visible = false;
             //Menu events
             addSectionToolStripMenuItem.Click += AddSection;
+            //Base controls
+            mainPanel = new DocumentPanel(mainDocumentPanel);
+            mainPanel.BoundDocument = _document;
+            Controls.Add(mainPanel);
             //Initializers
             InitializeInputEvents(this);
             InitializeDocAttributeBindings(this, _document);
@@ -48,9 +55,21 @@ namespace WeirdDocumentEditor
         {
             foreach (Control control in entryControl.Controls)
                 if (control is Label || control is TextBox)
-                    if (control.Name.Contains(nameof(Document.Title))) control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Title));
-                    else if (control.Name.Contains(nameof(Document.Author))) control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Author));
-                    else if (control.Name.Contains(nameof(Document.Type))) control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Type));
+                    if (control.Name.Contains(nameof(Document.Title)))
+                    {
+                        control.DataBindings.Clear();
+                        control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Title));
+                    }
+                    else if (control.Name.Contains(nameof(Document.Author)))
+                    {
+                        control.DataBindings.Clear();
+                        control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Author));
+                    }
+                    else if (control.Name.Contains(nameof(Document.Type)))
+                    {
+                        control.DataBindings.Clear();
+                        control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Type));
+                    }
         }
         /// <summary>
         /// Initializes input events for a control.
@@ -79,65 +98,6 @@ namespace WeirdDocumentEditor
                     controlEntry.Visible = false;
                 }
             }
-        }
-
-        /// <summary>
-        /// Initializes events for buttons.
-        /// <para>Avaliable events: AddParagraph, RemoveParagraph, RemoveSection</para>
-        /// <para>* AddSection is implemented as menuItem explicitly</para>
-        /// </summary>
-        /// <param name="controlEntry"></param>
-        private void InitializeButtonEvents(Control controlEntry)
-        {
-            if (controlEntry is Panel || controlEntry is DocumentPanel || controlEntry is Form)
-                foreach (Control control in controlEntry.Controls)
-                    InitializeButtonEvents(control);
-            else
-            {
-                if (controlEntry is Button)
-                {
-                    if (controlEntry.Name == DocumentPanel.AddParagraphButton)
-                        controlEntry.Click += AddParagraph;
-                    else if (controlEntry.Name == DocumentPanel.RemoveParagraphButton)
-                        controlEntry.Click += RemoveParagraph;
-                    else if (controlEntry.Name == DocumentPanel.RemoveSectionButton)
-                        controlEntry.Click += RemoveSection;
-                }
-            }
-        }
-        /// <summary>
-        /// Coordinates controls with data structure, or in other words front-end and back-end.
-        /// <para>Supposed to be called when a new Section/Paragraph was created.</para>
-        /// <para>Basically, creates a new Section/Paragraph and binds it to a given controlEntry.</para>
-        /// </summary>
-        /// <param name="controlEntry"></param>
-        /// <param name="_object"></param>
-        private void InitializeDataSync(DocumentPanel controlEntry, Document _object)
-        {
-            if (controlEntry.BaseName == Section.section)
-            {
-                _object.AddSection();
-                controlEntry.AssignDataBindings(_object);
-            }
-            else if (controlEntry.BaseName == Paragraph.paragraph)
-            {
-                DocumentPanel activeSection = controlEntry.Parent as DocumentPanel;
-                _object.Sections[activeSection.Id].AddParagraph();
-                controlEntry.AssignDataBindings(_object);
-            }
-            else throw new TypeAccessException();
-        }
-
-        /// <summary>
-        /// Call all initializers to fully implement a controlEntry into the programm.
-        /// </summary>
-        /// <param name="controlEntry"></param>
-        /// <param name="_object"></param>
-        private void InitializeDocumentControl(DocumentPanel controlEntry, Document _object)
-        {
-            InitializeInputEvents(controlEntry);
-            InitializeButtonEvents(controlEntry);
-            InitializeDataSync(controlEntry, _object);
         }
 
         /*
@@ -186,49 +146,9 @@ namespace WeirdDocumentEditor
 
         private void AddSection(object sender, EventArgs e)
         {
-            DocumentPanel newSection = new DocumentPanel(sectionDocumentPanel)
-            {
-                Id = SectionCount
-            };
-
-            Point currentScroll = docPanel.AutoScrollPosition;
-            docPanel.AutoScrollPosition = new Point(0, 0);
-            newSection.Location = NextSectionLocation;
-            docPanel.AutoScrollPosition = currentScroll;
-
-            docPanel.Controls.Add(newSection);
-            InitializeDocumentControl(newSection, _document);
-        }
-
-        private void RemoveSection(object sender, EventArgs e)
-        {
-
-        }
-
-        private void AddParagraph(object sender, EventArgs e)
-        {
-            DocumentPanel currentParagraph = (sender as Button).Parent as DocumentPanel;
-            currentParagraph.Controls[DocumentPanel.AddParagraphButton].Visible = false;
-            DocumentPanel activeSection = currentParagraph.Parent as DocumentPanel;
-
-            DocumentPanel newParagraph = new DocumentPanel(paragraphDocumentPanel)
-            {
-                Id = activeSection.ChildPanelCount
-            };
-
-            Point currentScroll = activeSection.AutoScrollPosition;
-            activeSection.AutoScrollPosition = new Point(0, 0);
-            newParagraph.Location = NextParagraphLocation(activeSection);
-            activeSection.AutoScrollPosition = currentScroll;
-
-            activeSection.Controls.Add(newParagraph);
-            //Initialization has to be performed after addition to controls
-            //because it has to refer to parent element.
-            InitializeDocumentControl(newParagraph, _document);
-        }
-
-        private void RemoveParagraph(object sender, EventArgs e)
-        {
+            _document.AddSection();
+            mainPanel.RenderChildPanelsRecursion();
+            mainPanel.AssignBindings();
             
         }
 

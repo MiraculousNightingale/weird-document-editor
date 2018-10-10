@@ -34,11 +34,13 @@
             this.docTitleLabel = new System.Windows.Forms.Label();
             this.docAuthorLabel = new System.Windows.Forms.Label();
             this.docTypeLabel = new System.Windows.Forms.Label();
-            this.docPanel = new System.Windows.Forms.Panel();
+            this.mainDocumentPanel = new System.Windows.Forms.Panel();
             this.sectionDocumentPanel = new System.Windows.Forms.Panel();
             this.removeSectionButton = new System.Windows.Forms.Button();
+            this.sectionStaticLabel = new System.Windows.Forms.Label();
             this.paragraphDocumentPanel = new System.Windows.Forms.Panel();
             this.removeParagraphButton = new System.Windows.Forms.Button();
+            this.paragraphStaticLabel = new System.Windows.Forms.Label();
             this.addParagraphButton = new System.Windows.Forms.Button();
             this.paragraphRichTextBox = new System.Windows.Forms.RichTextBox();
             this.paragraphTitleLabel = new System.Windows.Forms.Label();
@@ -52,9 +54,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.sectionStaticLabel = new System.Windows.Forms.Label();
-            this.paragraphStaticLabel = new System.Windows.Forms.Label();
-            this.docPanel.SuspendLayout();
+            this.mainDocumentPanel.SuspendLayout();
             this.sectionDocumentPanel.SuspendLayout();
             this.paragraphDocumentPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -129,15 +129,16 @@
             this.docTypeLabel.Text = "docTypeLabel";
             this.docTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // docPanel
+            // mainDocumentPanel
             // 
-            this.docPanel.AutoScroll = true;
-            this.docPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.docPanel.Controls.Add(this.sectionDocumentPanel);
-            this.docPanel.Location = new System.Drawing.Point(0, 155);
-            this.docPanel.Name = "docPanel";
-            this.docPanel.Size = new System.Drawing.Size(602, 572);
-            this.docPanel.TabIndex = 2;
+            this.mainDocumentPanel.AutoScroll = true;
+            this.mainDocumentPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.mainDocumentPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.mainDocumentPanel.Controls.Add(this.sectionDocumentPanel);
+            this.mainDocumentPanel.Location = new System.Drawing.Point(0, 155);
+            this.mainDocumentPanel.Name = "mainDocumentPanel";
+            this.mainDocumentPanel.Size = new System.Drawing.Size(602, 572);
+            this.mainDocumentPanel.TabIndex = 2;
             // 
             // sectionDocumentPanel
             // 
@@ -162,6 +163,15 @@
             this.removeSectionButton.Text = "-";
             this.removeSectionButton.UseVisualStyleBackColor = true;
             // 
+            // sectionStaticLabel
+            // 
+            this.sectionStaticLabel.AutoSize = true;
+            this.sectionStaticLabel.Location = new System.Drawing.Point(257, 1);
+            this.sectionStaticLabel.Name = "sectionStaticLabel";
+            this.sectionStaticLabel.Size = new System.Drawing.Size(43, 13);
+            this.sectionStaticLabel.TabIndex = 3;
+            this.sectionStaticLabel.Text = "Section";
+            // 
             // paragraphDocumentPanel
             // 
             this.paragraphDocumentPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -184,6 +194,15 @@
             this.removeParagraphButton.TabIndex = 2;
             this.removeParagraphButton.Text = "-";
             this.removeParagraphButton.UseVisualStyleBackColor = true;
+            // 
+            // paragraphStaticLabel
+            // 
+            this.paragraphStaticLabel.AutoSize = true;
+            this.paragraphStaticLabel.Location = new System.Drawing.Point(8, 0);
+            this.paragraphStaticLabel.Name = "paragraphStaticLabel";
+            this.paragraphStaticLabel.Size = new System.Drawing.Size(56, 13);
+            this.paragraphStaticLabel.TabIndex = 3;
+            this.paragraphStaticLabel.Text = "Paragraph";
             // 
             // addParagraphButton
             // 
@@ -268,7 +287,7 @@
             // addSectionToolStripMenuItem
             // 
             this.addSectionToolStripMenuItem.Name = "addSectionToolStripMenuItem";
-            this.addSectionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addSectionToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.addSectionToolStripMenuItem.Text = "Add Section";
             // 
             // label1
@@ -298,35 +317,16 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Type:";
             // 
-            // sectionStaticLabel
-            // 
-            this.sectionStaticLabel.AutoSize = true;
-            this.sectionStaticLabel.Location = new System.Drawing.Point(257, 1);
-            this.sectionStaticLabel.Name = "sectionStaticLabel";
-            this.sectionStaticLabel.Size = new System.Drawing.Size(43, 13);
-            this.sectionStaticLabel.TabIndex = 3;
-            this.sectionStaticLabel.Text = "Section";
-            // 
-            // paragraphStaticLabel
-            // 
-            this.paragraphStaticLabel.AutoSize = true;
-            this.paragraphStaticLabel.Location = new System.Drawing.Point(8, 0);
-            this.paragraphStaticLabel.Name = "paragraphStaticLabel";
-            this.paragraphStaticLabel.Size = new System.Drawing.Size(56, 13);
-            this.paragraphStaticLabel.TabIndex = 3;
-            this.paragraphStaticLabel.Text = "Paragraph";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(602, 727);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.docPanel);
+            this.Controls.Add(this.mainDocumentPanel);
             this.Controls.Add(this.docTypeLabel);
             this.Controls.Add(this.docAuthorLabel);
             this.Controls.Add(this.docTitleLabel);
@@ -338,7 +338,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
-            this.docPanel.ResumeLayout(false);
+            this.mainDocumentPanel.ResumeLayout(false);
             this.sectionDocumentPanel.ResumeLayout(false);
             this.sectionDocumentPanel.PerformLayout();
             this.paragraphDocumentPanel.ResumeLayout(false);
@@ -358,7 +358,7 @@
         private System.Windows.Forms.Label docTitleLabel;
         private System.Windows.Forms.Label docAuthorLabel;
         private System.Windows.Forms.Label docTypeLabel;
-        private System.Windows.Forms.Panel docPanel;
+        private System.Windows.Forms.Panel mainDocumentPanel;
         private System.Windows.Forms.Panel sectionDocumentPanel;
         private System.Windows.Forms.Label sectionTitleLabel;
         private System.Windows.Forms.TextBox sectionTitleTextBox;

@@ -34,6 +34,11 @@ namespace WeirdDocumentEditor
             Sections.Add(new Section());
         }
 
+        public void RemoveSection(int id)
+        {
+            Sections.RemoveAt(id);
+        }
+
 
     }
 }

@@ -30,5 +30,18 @@ namespace WeirdDocumentEditor
         {
             Paragraphs.Add(new Paragraph());
         }
+
+        public void InsertParagraph(int id)
+        {
+            if (id == Paragraphs.Count - 1)
+                Paragraphs.Add(new Paragraph());
+            else
+                Paragraphs.Insert(id, new Paragraph());
+        }
+
+        public void RemoveParagraph(int id)
+        {
+            Paragraphs.RemoveAt(id);
+        }
     }
 }

@@ -19,12 +19,6 @@ namespace WeirdDocumentEditor
         public static string TEXTBOX { get => "TextBox"; }
         public static string LABEL { get => "Label"; }
         public static string TEXT { get => "Text"; }
-        public static int PANEL_L { get => PANEL.Length; }
-        public static int BUTTON_L { get => BUTTON.Length; }
-        public static int RICHTEXTBOX_L { get => RICHTEXTBOX.Length; }
-        public static int TEXTBOX_L { get => TEXTBOX.Length; }
-        public static int LABEL_L { get => LABEL.Length; }
-        public static int TEXT_L { get => TEXT.Length; }
 
         /*
          * Factory methods to generale control names
