@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace WeirdDocumentEditor
 {
@@ -37,6 +39,10 @@ namespace WeirdDocumentEditor
             sectionDocumentPanel.Visible = false;
             mainDocumentPanel.Visible = false;
             //Menu events
+            newToolStripMenuItem.Click += NewDocument;
+            openToolStripMenuItem.Click += OpenDocument;
+            saveToolStripMenuItem.Click += SaveDocument;
+            saveAsToolStripMenuItem.Click += SaveAsDocument;
             addSectionToolStripMenuItem.Click += AddSection;
             //Base controls
             mainPanel = new DocumentPanel(mainDocumentPanel);
@@ -59,16 +65,22 @@ namespace WeirdDocumentEditor
                     {
                         control.DataBindings.Clear();
                         control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Title));
+                        control.Visible = false;
+                        control.Visible = true;
                     }
                     else if (control.Name.Contains(nameof(Document.Author)))
                     {
                         control.DataBindings.Clear();
                         control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Author));
+                        control.Visible = false;
+                        control.Visible = true;
                     }
                     else if (control.Name.Contains(nameof(Document.Type)))
                     {
                         control.DataBindings.Clear();
                         control.DataBindings.Add(nameof(TextBox.Text), _object, nameof(Document.Type));
+                        control.Visible = false;
+                        control.Visible = true;
                     }
         }
         /// <summary>
@@ -95,6 +107,7 @@ namespace WeirdDocumentEditor
                 else if (controlEntry is TextBox)
                 {
                     controlEntry.Validated += SwitchToLabel;
+                    controlEntry.VisibleChanged += EmptyLabelSwitch;
                     controlEntry.Visible = false;
                 }
             }
@@ -149,7 +162,79 @@ namespace WeirdDocumentEditor
             _document.AddSection();
             mainPanel.RenderChildPanelsRecursion();
             mainPanel.AssignBindings();
-            
+
+        }
+        private string currentDocument = string.Empty;
+        private void SaveDocument(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(currentDocument))
+                SaveAsDocument(sender, e);
+            else
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Document));
+                TextWriter textWriter = new StreamWriter(@currentDocument);
+                serializer.Serialize(textWriter, _document);
+                textWriter.Close();
+            }
+        }
+
+        private SaveFileDialog SFD = new SaveFileDialog
+        {
+            FileName = string.Empty,
+            DefaultExt = "wdoc",
+            Filter = "Weird Document (*.wdoc)|*.wdoc|All files (*.*)|*.*",
+            CheckFileExists = false,
+            CheckPathExists = true,
+            RestoreDirectory = true
+        };
+        private void SaveAsDocument(object sender, EventArgs e)
+        {
+            if (SFD.ShowDialog() == DialogResult.OK)
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Document));
+                TextWriter textWriter = new StreamWriter(@SFD.FileName);
+                serializer.Serialize(textWriter, _document);
+                textWriter.Close();
+
+                currentDocument = SFD.FileName;
+            }
+        }
+
+        private OpenFileDialog OFD = new OpenFileDialog
+        {
+            FileName = string.Empty,
+            DefaultExt = "wdoc",
+            Filter = "Weird Document (*.wdoc)|*.wdoc|All files (*.*)|*.*",
+            CheckFileExists = true,
+            CheckPathExists = true,
+            RestoreDirectory = true
+        };
+        private void OpenDocument(object sender, EventArgs e)
+        {
+            if(OFD.ShowDialog() == DialogResult.OK)
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Document));
+                TextReader textReader = new StreamReader(@OFD.FileName);
+                _document = serializer.Deserialize(textReader) as Document;
+                textReader.Close();
+                InitializeDocAttributeBindings(this, _document);
+                mainPanel.BoundDocument = _document;
+
+                currentDocument = OFD.FileName;
+                mainPanel.RenderChildPanelsRecursion();
+                mainPanel.AssignBindings();
+            }
+        }
+
+        private void NewDocument(object sender, EventArgs e)
+        {
+            _document = new Document();
+            InitializeDocAttributeBindings(this, _document);
+            mainPanel.BoundDocument = _document;
+            mainPanel.RenderChildPanelsRecursion();
+            mainPanel.AssignBindings();
+
+            currentDocument = string.Empty;
         }
 
     }

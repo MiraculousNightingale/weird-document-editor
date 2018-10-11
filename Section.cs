@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeirdDocumentEditor
 {
-    class Section
+    public class Section
     {
         public static string SECTION { get => "Section"; }
         public static string section { get => SECTION.ToLower(); }
@@ -21,6 +21,12 @@ namespace WeirdDocumentEditor
             //Debug
             //Title = "NewSection";
             Paragraphs = new List<Paragraph>();
+        }
+
+        public Section(int paragraphCount)
+        {
+            Title = string.Empty;
+            Paragraphs=new List<Paragraph>();
             AddParagraph();
         }
         /// <summary>

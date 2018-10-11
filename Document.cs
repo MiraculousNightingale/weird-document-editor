@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeirdDocumentEditor
 {
-    class Document
+    public class Document
     {
 
         public string Title { get; set; }
@@ -31,7 +31,7 @@ namespace WeirdDocumentEditor
         /// </summary>
         public void AddSection()
         {
-            Sections.Add(new Section());
+            Sections.Add(new Section(1));
         }
 
         public void RemoveSection(int id)

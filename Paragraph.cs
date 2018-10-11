@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeirdDocumentEditor
 {
-    class Paragraph
+    public class Paragraph
     {
         public static string PARAGRAPH { get => "Paragraph"; }
         public static string paragraph { get => PARAGRAPH.ToLower(); }
