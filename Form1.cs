@@ -107,7 +107,6 @@ namespace WeirdDocumentEditor
                 else if (controlEntry is TextBox)
                 {
                     controlEntry.Validated += SwitchToLabel;
-                    controlEntry.VisibleChanged += EmptyLabelSwitch;
                     controlEntry.Visible = false;
                 }
             }
